@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { clsx } from 'clsx'
 import { X, Plus } from 'lucide-react'
 import { ConversationList } from './ConversationList'
@@ -27,6 +28,13 @@ export function Sidebar({
   onClose,
 }: SidebarProps) {
   const vocab = loadVocabulary()
+  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+
+  const filtered = selectedTag
+    ? conversations.filter(
+        (c) => c.themes.includes(selectedTag) || c.emotions.includes(selectedTag),
+      )
+    : conversations
 
   return (
     <aside
@@ -63,10 +71,34 @@ export function Sidebar({
         </button>
       </div>
 
+      {/* Active filter indicator */}
+      {selectedTag && (
+        <div
+          className="flex items-center gap-2 px-4 py-2 shrink-0"
+          style={{ borderBottom: '1px solid var(--color-crow-border)' }}
+        >
+          <span className="text-xs" style={{ color: 'var(--color-crow-muted)' }}>
+            筛选：
+          </span>
+          <span
+            className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
+            style={{ background: 'var(--color-crow-accent)', color: 'var(--color-crow-bg)' }}
+          >
+            {selectedTag}
+            <button onClick={() => setSelectedTag(null)} className="ml-0.5" aria-label="清除筛选">
+              <X size={11} />
+            </button>
+          </span>
+          <span className="text-xs ml-auto" style={{ color: 'var(--color-crow-muted)', opacity: 0.6 }}>
+            {filtered.length} 条
+          </span>
+        </div>
+      )}
+
       {/* Conversation list */}
       <div className="flex-1 overflow-y-auto min-h-0">
         <ConversationList
-          conversations={conversations}
+          conversations={filtered}
           activeId={activeId}
           onSelect={onSelectConversation}
         />
@@ -74,7 +106,12 @@ export function Sidebar({
 
       {/* Tag tree */}
       <div style={{ borderTop: '1px solid var(--color-crow-border)' }}>
-        <TagTree themes={vocab.themes} emotions={vocab.emotions} />
+        <TagTree
+          themes={vocab.themes}
+          emotions={vocab.emotions}
+          selectedTag={selectedTag}
+          onTagSelect={setSelectedTag}
+        />
       </div>
 
       {/* Bottom controls */}

@@ -5,9 +5,11 @@ import { clsx } from 'clsx'
 interface TagSectionProps {
   label: string
   tags: string[]
+  selectedTag: string | null
+  onTagSelect: (tag: string | null) => void
 }
 
-function TagSection({ label, tags }: TagSectionProps) {
+function TagSection({ label, tags, selectedTag, onTagSelect }: TagSectionProps) {
   const [expanded, setExpanded] = useState(false)
   if (tags.length === 0) return null
 
@@ -27,18 +29,23 @@ function TagSection({ label, tags }: TagSectionProps) {
       </button>
       {expanded && (
         <div className="flex flex-wrap gap-1.5 px-4 pb-3">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-0.5 rounded-full text-xs"
-              style={{
-                background: 'var(--color-crow-border)',
-                color: 'var(--color-crow-muted)',
-              }}
-            >
-              {tag}
-            </span>
-          ))}
+          {tags.map((tag) => {
+            const active = selectedTag === tag
+            return (
+              <button
+                key={tag}
+                onClick={() => onTagSelect(active ? null : tag)}
+                className="px-2 py-0.5 rounded-full text-xs transition-colors"
+                style={{
+                  background: active ? 'var(--color-crow-accent)' : 'var(--color-crow-border)',
+                  color: active ? 'var(--color-crow-bg)' : 'var(--color-crow-muted)',
+                  fontWeight: active ? 500 : 400,
+                }}
+              >
+                {tag}
+              </button>
+            )
+          })}
         </div>
       )}
     </div>
@@ -48,9 +55,11 @@ function TagSection({ label, tags }: TagSectionProps) {
 interface TagTreeProps {
   themes: string[]
   emotions: string[]
+  selectedTag: string | null
+  onTagSelect: (tag: string | null) => void
 }
 
-export function TagTree({ themes, emotions }: TagTreeProps) {
+export function TagTree({ themes, emotions, selectedTag, onTagSelect }: TagTreeProps) {
   if (themes.length === 0 && emotions.length === 0) {
     return (
       <p
@@ -63,8 +72,8 @@ export function TagTree({ themes, emotions }: TagTreeProps) {
   }
   return (
     <div className="py-1">
-      <TagSection label="主题" tags={themes} />
-      <TagSection label="情绪" tags={emotions} />
+      <TagSection label="主题" tags={themes} selectedTag={selectedTag} onTagSelect={onTagSelect} />
+      <TagSection label="情绪" tags={emotions} selectedTag={selectedTag} onTagSelect={onTagSelect} />
     </div>
   )
 }
