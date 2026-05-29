@@ -24,6 +24,13 @@ body,
 #root {
   height: 100%;
   overflow: hidden;
+  max-width: 100%;
+}
+
+html {
+  /* prevent iOS Safari text size adjustment */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {

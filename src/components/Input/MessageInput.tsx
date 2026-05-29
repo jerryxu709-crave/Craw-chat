@@ -58,10 +58,12 @@ export function MessageInput({ onSend, disabled, mode }: MessageInputProps) {
           placeholder={placeholder}
           disabled={disabled}
           rows={1}
-          className="flex-1 resize-none bg-transparent text-sm outline-none py-1"
+          className="flex-1 resize-none bg-transparent outline-none py-1"
           style={{
             color: 'var(--color-crow-text)',
             maxHeight: '200px',
+            fontSize: '16px',   /* prevents iOS Safari auto-zoom on focus */
+            lineHeight: '1.5',
           }}
         />
         <button
