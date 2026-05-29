@@ -3,7 +3,7 @@ import { Sidebar } from './components/Sidebar/Sidebar'
 import { ChatView } from './components/ChatView/ChatView'
 import { useSettings } from './hooks/useSettings'
 import { useConversation } from './hooks/useConversation'
-import { getConversations } from './lib/db'
+import { getConversations, deleteConversation } from './lib/db'
 import type { Conversation } from './types'
 
 export default function App() {
@@ -39,6 +39,14 @@ export default function App() {
     refreshConversations()
   }
 
+  const handleDeleteConversation = async (id: string) => {
+    await deleteConversation(id)
+    refreshConversations()
+    if (activeConversation?.id === id) {
+      await startNewConversation()
+    }
+  }
+
   return (
     <div className="flex h-dvh overflow-hidden" style={{ background: 'var(--color-crow-bg)' }}>
       {/* Backdrop */}
@@ -57,6 +65,7 @@ export default function App() {
         onSelectConversation={handleSelectConversation}
         onNewConversation={handleNewConversation}
         onModeChange={setMode}
+        onDeleteConversation={handleDeleteConversation}
         onClose={() => setSidebarOpen(false)}
       />
 

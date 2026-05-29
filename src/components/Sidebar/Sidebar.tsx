@@ -14,6 +14,7 @@ interface SidebarProps {
   onSelectConversation: (conv: Conversation) => void
   onNewConversation: () => void
   onModeChange: (mode: LanguageMode) => void
+  onDeleteConversation: (id: string) => void
   onClose: () => void
 }
 
@@ -25,6 +26,7 @@ export function Sidebar({
   onSelectConversation,
   onNewConversation,
   onModeChange,
+  onDeleteConversation,
   onClose,
 }: SidebarProps) {
   const vocab = loadVocabulary()
@@ -101,6 +103,7 @@ export function Sidebar({
           conversations={filtered}
           activeId={activeId}
           onSelect={onSelectConversation}
+          onDelete={onDeleteConversation}
         />
       </div>
 
