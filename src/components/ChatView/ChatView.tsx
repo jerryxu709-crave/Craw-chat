@@ -6,6 +6,7 @@ import { SoulBackground } from './SoulBackground'
 import { MessageInput } from '../Input/MessageInput'
 import { buildMarkdownExport, downloadMarkdown } from '../../lib/export'
 import { getMessages } from '../../lib/db'
+import { useGyroscope } from '../../hooks/useGyroscope'
 import type { Conversation, Message, StreamingMessage, LanguageMode } from '../../types'
 
 interface ChatViewProps {
@@ -28,6 +29,8 @@ export function ChatView({
   onSendMessage,
 }: ChatViewProps) {
   const bottomRef = useRef<HTMLDivElement>(null)
+  const bgRef = useRef<HTMLDivElement>(null)
+  const { needsPermission, requestPermission } = useGyroscope(bgRef)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -43,10 +46,15 @@ export function ChatView({
 
   return (
     <div className="relative flex flex-col flex-1 min-w-0 h-full">
-      <SoulBackground />
+      <SoulBackground
+        bgRef={bgRef}
+        needsPermission={needsPermission}
+        onRequestPermission={requestPermission}
+      />
+
       {/* Header */}
       <header
-        className="flex items-center px-3 py-3 shrink-0"
+        className="relative flex items-center px-3 py-3 shrink-0"
         style={{
           borderBottom: '1px solid var(--color-crow-border)',
           paddingTop: 'max(0.75rem, env(safe-area-inset-top))',
@@ -80,7 +88,7 @@ export function ChatView({
       </header>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-5">
+      <div className="relative flex-1 overflow-y-auto px-4 py-6 space-y-5">
         {messages.length === 0 && !streaming ? (
           <EmptyState mode={mode} />
         ) : (
