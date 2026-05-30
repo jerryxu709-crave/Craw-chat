@@ -71,72 +71,79 @@ body {
   transition: translate 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Layer 1 — large cloud mass, upper-left, far plane */
+/*
+  Blob centers are positioned OUTSIDE the viewport corners.
+  The blur radius bleeds the glow inward — keeping the center dark
+  so content stays readable, while corners glow like cloud wisps.
+  iPhone 15 screen ≈ 393×852px.
+*/
+
+/* Top-left corner — main cloud mass */
 .soul-1 {
-  width: 500px;
-  height: 360px;
-  top: 2%;
-  left: -8%;
-  background: radial-gradient(
-    ellipse at 40% 50%,
-    rgba(248, 246, 242, 0.38) 0%,
-    rgba(248, 246, 242, 0.14) 40%,
-    transparent 68%
-  );
-  filter: blur(62px);
-  animation: soul-drift-1 36s ease-in-out infinite;
-  translate: calc(var(--gx, 0) * 28px) calc(var(--gy, 0) * 18px);
-}
-
-/* Layer 2 — secondary cloud, lower-right, mid plane */
-.soul-2 {
   width: 420px;
-  height: 480px;
-  bottom: 5%;
-  right: -6%;
-  background: radial-gradient(
-    ellipse at 55% 45%,
-    rgba(245, 242, 238, 0.32) 0%,
-    rgba(245, 242, 238, 0.10) 44%,
-    transparent 70%
-  );
-  filter: blur(74px);
-  animation: soul-drift-2 52s ease-in-out infinite;
-  translate: calc(var(--gx, 0) * -22px) calc(var(--gy, 0) * 30px);
-}
-
-/* Layer 3 — horizontal mist band, mid-screen */
-.soul-3 {
-  width: 540px;
-  height: 200px;
-  top: 42%;
-  left: -5%;
+  height: 380px;
+  top: -18%;
+  left: -22%;
   background: radial-gradient(
     ellipse at center,
-    rgba(250, 248, 245, 0.26) 0%,
-    rgba(250, 248, 245, 0.08) 50%,
-    transparent 72%
+    rgba(248, 246, 242, 0.50) 0%,
+    rgba(248, 246, 242, 0.20) 38%,
+    transparent 65%
   );
-  filter: blur(88px);
-  animation: soul-drift-3 44s ease-in-out infinite;
-  translate: calc(var(--gx, 0) * 48px) calc(var(--gy, 0) * 14px);
+  filter: blur(72px);
+  animation: soul-drift-1 36s ease-in-out infinite;
+  translate: calc(var(--gx, 0) * 28px) calc(var(--gy, 0) * 20px);
 }
 
-/* Layer 4 — small bright wisp, closest to user, most movement */
+/* Bottom-right corner — secondary cloud */
+.soul-2 {
+  width: 400px;
+  height: 440px;
+  bottom: -12%;
+  right: -22%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(245, 242, 238, 0.46) 0%,
+    rgba(245, 242, 238, 0.16) 40%,
+    transparent 65%
+  );
+  filter: blur(78px);
+  animation: soul-drift-2 52s ease-in-out infinite;
+  translate: calc(var(--gx, 0) * -24px) calc(var(--gy, 0) * 32px);
+}
+
+/* Top-right corner — small wisp */
+.soul-3 {
+  width: 280px;
+  height: 320px;
+  top: -6%;
+  right: -20%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(250, 248, 245, 0.42) 0%,
+    rgba(250, 248, 245, 0.14) 42%,
+    transparent 66%
+  );
+  filter: blur(65px);
+  animation: soul-drift-3 44s ease-in-out infinite;
+  translate: calc(var(--gx, 0) * -50px) calc(var(--gy, 0) * 18px);
+}
+
+/* Bottom-left corner — low wisp, nearest parallax layer */
 .soul-4 {
-  width: 180px;
-  height: 220px;
-  top: 22%;
-  left: 48%;
+  width: 300px;
+  height: 280px;
+  bottom: 8%;
+  left: -24%;
   background: radial-gradient(
     ellipse at center,
     rgba(252, 251, 248, 0.44) 0%,
-    rgba(252, 251, 248, 0.14) 45%,
-    transparent 68%
+    rgba(252, 251, 248, 0.14) 40%,
+    transparent 65%
   );
-  filter: blur(48px);
+  filter: blur(68px);
   animation: soul-drift-4 24s ease-in-out infinite;
-  translate: calc(var(--gx, 0) * 82px) calc(var(--gy, 0) * 62px);
+  translate: calc(var(--gx, 0) * 72px) calc(var(--gy, 0) * 56px);
 }
 
 @keyframes soul-drift-1 {
