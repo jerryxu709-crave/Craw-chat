@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Menu, Download } from 'lucide-react'
 import { MessageBubble } from './MessageBubble'
 import { EmptyState } from './EmptyState'
+import { SoulBackground } from './SoulBackground'
 import { MessageInput } from '../Input/MessageInput'
 import { buildMarkdownExport, downloadMarkdown } from '../../lib/export'
 import { getMessages } from '../../lib/db'
@@ -41,7 +42,8 @@ export function ChatView({
   }
 
   return (
-    <div className="flex flex-col flex-1 min-w-0 h-full">
+    <div className="relative flex flex-col flex-1 min-w-0 h-full">
+      <SoulBackground />
       {/* Header */}
       <header
         className="flex items-center px-3 py-3 shrink-0"

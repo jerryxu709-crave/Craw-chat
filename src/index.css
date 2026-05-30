@@ -52,3 +52,93 @@ body {
   background: var(--color-crow-border);
   border-radius: 2px;
 }
+
+/* ── Soul background ───────────────────────────────────────── */
+
+.soul-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.soul {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: translate 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Cream spirit — the main soul, upper-left */
+.soul-1 {
+  width: 540px;
+  height: 420px;
+  top: -6%;
+  left: -12%;
+  background: radial-gradient(
+    ellipse at 45% 50%,
+    rgba(232, 228, 220, 0.13) 0%,
+    rgba(232, 228, 220, 0.05) 42%,
+    transparent 70%
+  );
+  filter: blur(82px);
+  animation: soul-drift-1 34s ease-in-out infinite;
+  translate: calc(var(--gx, 0) * 48px) calc(var(--gy, 0) * 32px);
+}
+
+/* Gold warmth — Crow's voice, lower-right */
+.soul-2 {
+  width: 400px;
+  height: 500px;
+  bottom: 2%;
+  right: -10%;
+  background: radial-gradient(
+    ellipse at 55% 45%,
+    rgba(201, 169, 110, 0.11) 0%,
+    rgba(201, 169, 110, 0.04) 46%,
+    transparent 70%
+  );
+  filter: blur(92px);
+  animation: soul-drift-2 47s ease-in-out infinite;
+  translate: calc(var(--gx, 0) * -32px) calc(var(--gy, 0) * 22px);
+}
+
+/* Cool wisp — the quiet observer, centre */
+.soul-3 {
+  width: 300px;
+  height: 340px;
+  top: 35%;
+  left: 28%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(180, 198, 222, 0.07) 0%,
+    transparent 65%
+  );
+  filter: blur(68px);
+  animation: soul-drift-3 58s ease-in-out infinite;
+  translate: calc(var(--gx, 0) * 64px) calc(var(--gy, 0) * 46px);
+}
+
+@keyframes soul-drift-1 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  20%  { transform: translate(22px, -14px) scale(1.04); }
+  45%  { transform: translate(-10px, 28px) scale(0.96); }
+  70%  { transform: translate(18px, 12px) scale(1.02); }
+  85%  { transform: translate(-20px, -8px) scale(0.98); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes soul-drift-2 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  30%  { transform: translate(-18px, 22px) scale(1.06); }
+  55%  { transform: translate(24px, -12px) scale(0.94); }
+  80%  { transform: translate(-8px, -20px) scale(1.03); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes soul-drift-3 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  35%  { transform: translate(14px, 18px) scale(1.03); }
+  65%  { transform: translate(-20px, -6px) scale(0.97); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
